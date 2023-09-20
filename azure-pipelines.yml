@@ -40,6 +40,7 @@ jobs:
   pool:
     name: WindowsReactAgent
   steps:
+  - checkout: none
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -58,6 +59,7 @@ jobs:
     name: WindowsReactAgent
   condition: succeeded()
   steps:
+  - checkout: none
   - download: current
     artifact: calculator
   - script: |
