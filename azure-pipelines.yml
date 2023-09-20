@@ -60,10 +60,8 @@ jobs:
     name: WindowsReactAgent
   condition: succeeded()
   steps:
-  - checkout: none
   - download: current
     artifact: calculator
-  - script: |
-      # Add deployment steps here (e.g., deploying to Azure App Service, etc.)
+  - script:
     displayName: 'Deploy Calculadora Application'
 
