@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build --output-path=C:/tools/vsts-agent-win-x64-3.225.0/_work/builds/",
+    "build": "react-scripts build --output-path=C:/tools/vsts-agent-win-x64-3.225.0/_work/1/s/build",
     "test": "react-scripts test --reporters=default --reporters=jest-html-reporter",
     "eject": "react-scripts eject"
   },
