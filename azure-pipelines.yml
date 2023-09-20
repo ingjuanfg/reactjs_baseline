@@ -24,14 +24,14 @@ jobs:
   
   - script: |
       npm install
-      npm run build
       npm install --save-dev jest @testing-library/react @testing-library/jest-dom --force
       npm install --save-dev jest-html-reporter
+      npm run build
     displayName: 'Install Dependencies and Build'
     
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: 'build'
+      pathtoPublish: 'C:/tools/vsts-agent-win-x64-3.225.0/_work/builds/'
       artifactName: 'drop'
     displayName: 'Publish Artifact'
 
@@ -47,6 +47,8 @@ jobs:
     
   - script: |
       npm install
+      npm install --save-dev jest @testing-library/react @testing-library/jest-dom --force
+      npm install --save-dev jest-html-reporter
       npm test
     displayName: 'Run Tests'
 
