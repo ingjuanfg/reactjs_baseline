@@ -4,18 +4,55 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+- '*'
+
+pr:
+- '*'
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+jobs:
+- job: Build
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
+  
+  - script: |
+      npm install
+      npm run build
+      npm install --save-dev jest @testing-library/react @testing-library/jest-dom --force
+      npm install --save-dev jest-html-reporter
+    displayName: 'Install Dependencies and Build'
+    
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'build'
+      artifactName: 'drop'
+    displayName: 'Publish Artifact'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+- job: Test
+  dependsOn: Build
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
+    
+  - script: |
+      npm install
+      npm test
+    displayName: 'Run Tests'
+
+- job: Deploy
+  dependsOn: Test
+  condition: succeeded()
+  steps:
+  - download: current
+    artifact: drop
+  - script: |
+      # Add deployment steps here (e.g., deploying to Azure App Service, etc.)
+    displayName: 'Deploy Calculadora Application'
+
