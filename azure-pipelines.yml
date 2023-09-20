@@ -31,8 +31,8 @@ jobs:
     
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: 'C:/tools/vsts-agent-win-x64-3.225.0/_work/builds/'
-      artifactName: 'drop'
+      pathtoPublish: 'C:/tools/vsts-agent-win-x64-3.225.0/_work/1/s/build'
+      artifactName: 'calculator'
     displayName: 'Publish Artifact'
 
 - job: Test
@@ -59,7 +59,7 @@ jobs:
   condition: succeeded()
   steps:
   - download: current
-    artifact: drop
+    artifact: calculator
   - script: |
       # Add deployment steps here (e.g., deploying to Azure App Service, etc.)
     displayName: 'Deploy Calculadora Application'
