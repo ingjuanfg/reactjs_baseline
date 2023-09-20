@@ -15,7 +15,7 @@ pool:
 jobs:
 - job: Build
   pool:
-    name: DESKTOP-IEHSC1C
+    name: WindowsReactAgent
   steps:
   - task: NodeTool@0
     inputs:
@@ -38,7 +38,7 @@ jobs:
 - job: Test
   dependsOn: Build
   pool:
-    name: DESKTOP-IEHSC1C
+    name: WindowsReactAgent
   steps:
   - task: NodeTool@0
     inputs:
@@ -53,7 +53,7 @@ jobs:
 - job: Deploy
   dependsOn: Test
   pool:
-    name: DESKTOP-IEHSC1C
+    name: WindowsReactAgent
   condition: succeeded()
   steps:
   - download: current
