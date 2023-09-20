@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import NewsList from './NewsList'; // Agrega esta importación
+import NewsList from './NewsList';
 
 class App extends Component {
   constructor() {
@@ -60,7 +60,6 @@ class App extends Component {
             <span className="result" data-testid="result">{this.state.result}</span>
           </div>
           <div className="buttons">
-            {/* Resto del código de la calculadora */}
             <button onClick={() => this.handleInput('7')}>7</button>
             <button onClick={() => this.handleInput('8')}>8</button>
             <button onClick={() => this.handleInput('9')}>9</button>
@@ -93,13 +92,10 @@ class App extends Component {
         </div>
         <button onClick={this.toggleNewsModal}>Ver Noticias</button>
 
-        {/* Modal de Noticias */}
         {this.state.showNewsModal && (
           <div className="news-modal">
             <div className="news-modal-content">
               <h2>Últimas Noticias</h2>
-              {/* Aquí puedes incluir tu lista de noticias y lógica para agregar noticias */}
-              {/* Un botón para cerrar el modal */}
               <NewsList news={this.state.news} />
               <button onClick={this.toggleNewsModal}>Cerrar</button>
             </div>
