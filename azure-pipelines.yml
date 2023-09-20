@@ -1,0 +1,67 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- '*'
+
+pr:
+- '*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: Build
+  pool:
+    name: WindowsReactAgent
+  steps:
+  - checkout: self
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
+  
+  - script: |
+      npm install
+      npm install --save-dev jest @testing-library/react @testing-library/jest-dom --force
+      npm install --save-dev jest-html-reporter
+      npm run build
+    displayName: 'Install Dependencies and Build'
+    
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'C:/tools/vsts-agent-win-x64-3.225.0/_work/1/s/build'
+      artifactName: 'calculator'
+    displayName: 'Publish Artifact'
+
+- job: Test
+  dependsOn: Build
+  pool:
+    name: WindowsReactAgent
+  steps:
+  - checkout: none
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
+    
+  - script: |
+      npm install
+      npm install --save-dev jest @testing-library/react @testing-library/jest-dom --force
+      npm install --save-dev jest-html-reporter
+      npm test
+    displayName: 'Run Tests'
+
+- job: Deploy
+  dependsOn: Test
+  pool:
+    name: WindowsReactAgent
+  condition: succeeded()
+  steps:
+  - download: current
+    artifact: calculator
+  - script:
+    displayName: 'Deploy Calculadora Application'
+
