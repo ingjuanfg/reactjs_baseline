@@ -42,6 +42,7 @@ jobs:
     name: WindowsReactAgent
   steps:
   - checkout: none
+#  - checkout: git:juanisfg@dev.azure.com/juanisfg/demo_project/_git/cypress_test
   - task: NodeTool@0
     inputs:
       versionSpec: '14.x'
@@ -52,6 +53,12 @@ jobs:
       npm install --save-dev jest @testing-library/react @testing-library/jest-dom --force
       npm install --save-dev jest-html-reporter
       npm test
+#     npm install cypress --save-dev
+#     npm install -g npx
+#     npm install -D cypress-xpath
+#     npm install -D cypress-plugin-tab
+#     cd C:/tools/vsts-agent-win-x64-3.225.0/_work/1/s/cypress_test
+#      npx cypress run
     displayName: 'Run Tests'
 
 - job: Deploy
@@ -64,4 +71,3 @@ jobs:
     artifact: calculator
   - script:
     displayName: 'Deploy Calculadora Application'
-
